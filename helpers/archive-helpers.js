@@ -34,7 +34,7 @@ exports.readListOfUrls = function(callback) {
     callback(dataArray);
   });
 };
-
+ 
 exports.isUrlInList = function(url, callback) {
   var out = false;
 
@@ -42,9 +42,8 @@ exports.isUrlInList = function(url, callback) {
     if(err){
       throw err;
     }
-  console.log(data);
+
   var dataArray = data.split('\n');
-  console.log(dataArray);
 
   _.each(dataArray, function(dataURL) {
     if (url === dataURL) {
@@ -56,7 +55,19 @@ exports.isUrlInList = function(url, callback) {
 
 };
 
-exports.addUrlToList = function() {
+exports.addUrlToList = function(url, callback) {
+  fs.readFile(path.join(__dirname, '../archives/sites.txt'), "utf-8", function(err, data){
+    if(err){
+      throw err;
+    }
+
+  var dataArray = data.split('\n');
+
+  dataArray[dataArray.length] = url;
+
+  fs.writeFile(path.join(__dirname, '../archives/sites.txt'), "utf-8", dataArray.join("\n"));
+  });
+  callback(dataArray);
 };
 
 exports.isUrlArchived = function(url, callback) {
