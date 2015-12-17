@@ -11,7 +11,7 @@ console.log("Serving request type " + req.method + " for url " + req.url);
 if(req.method === 'GET'){
   if(req.url === "/" || req.url === undefined){
       res.writeHead(statusCode);
-      fs.readFile(archive.paths.siteAssets + "/index.html", function(err, data){
+      fs.readFile(archive.paths.siteAssets + "/index.html", "utf-8", function(err, data){
         if(err){
           throw err;
         }
@@ -19,6 +19,8 @@ if(req.method === 'GET'){
         //console.log((data).toString());
         res.end((data).toString());
       });
+  } else if (archive.isUrlArchived(req.url)){
+    //if true resond with site data
   }
 }
 

@@ -25,7 +25,7 @@ describe("server", function() {
     });
   });
 
-  describe("archived websites", function () {
+  xdescribe("archived websites", function () {
     describe("GET", function () {
       it("should return the content of a website from the archive", function (done) {
         var fixtureName = "www.google.com";
@@ -76,9 +76,9 @@ describe("server", function() {
   });
 });
 
-xdescribe("archive helpers", function(){
-  xdescribe("#readListOfUrls", function () {
-    xit("should read urls from sites.txt", function (done){
+describe("archive helpers", function(){
+  describe("#readListOfUrls", function () {
+    it("should read urls from sites.txt", function (done){
       var urlArray = ["example1.com", "example2.com"];
       fs.writeFileSync(archive.paths.list, urlArray.join("\n"));
 
@@ -89,8 +89,8 @@ xdescribe("archive helpers", function(){
     });
   });
 
-  xdescribe("#isUrlInList", function () {
-    xit("should check if a url is in the list", function (done) {
+  describe("#isUrlInList", function () {
+    it("should check if a url is in the list", function (done) {
       var urlArray = ["example1.com", "example2.com"];
       fs.writeFileSync(archive.paths.list, urlArray.join("\n"));
 
@@ -109,8 +109,8 @@ xdescribe("archive helpers", function(){
     });
   });
 
-  xdescribe("#addUrlToList", function () {
-    xit("should add a url to the list", function (done) {
+  describe("#addUrlToList", function () {
+    it("should add a url to the list", function (done) {
       var urlArray = ["example1.com", "example2.com\n"];
       fs.writeFileSync(archive.paths.list, urlArray.join("\n"));
 
@@ -123,8 +123,8 @@ xdescribe("archive helpers", function(){
     });
   });
 
-  xdescribe("#isUrlArchived", function () {
-    xit("should check if a url is archived", function (done) {
+  describe("#isUrlArchived", function () {
+    it("should check if a url is archived", function (done) {
       fs.writeFileSync(archive.paths.archivedSites + "/www.example.com", "blah blah");
 
       var counter = 0;
@@ -132,18 +132,18 @@ xdescribe("archive helpers", function(){
 
       archive.isUrlArchived("www.example.com", function (exists) {
         expect(exists);
-        if (++counter == total) { done() }
+        if (++counter == total) { done();}
       });
 
       archive.isUrlArchived("www.notarchived.com", function (exists) {
         expect(!exists);
-        if (++counter == total) { done() }
+        if (++counter == total) { done(); }
       });
     });
   });
 
-  xdescribe("#downloadUrls", function () {
-    xit("should download all pending urls in the list", function (done) {
+  describe("#downloadUrls", function () {
+    it("should download all pending urls in the list", function (done) {
       var urlArray = ["www.example.com", "www.google.com"];
       archive.downloadUrls(urlArray);
 
