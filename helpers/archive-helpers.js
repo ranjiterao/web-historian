@@ -15,6 +15,8 @@ exports.paths = {
   list: path.join(__dirname, '../archives/sites.txt')
 };
 
+// var list = exports.paths.list;
+
 // Used for stubbing paths for tests, do not modify
 exports.initialize = function(pathsObj) {
   _.each(pathsObj, function(path, type) {
@@ -26,11 +28,11 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(callback) {
-  fs.readFile(path.join(__dirname, '../archives/sites.txt'), "utf-8", function(err, data){
+  fs.readFile(exports.paths.list, "utf8", function(err, data){
     if(err){
       throw err;
     }
-    var dataArray = data.split("\n")
+    var dataArray = data.toString().split("\n")
     callback(dataArray);
   });
 };
@@ -38,41 +40,74 @@ exports.readListOfUrls = function(callback) {
 exports.isUrlInList = function(url, callback) {
   var out = false;
 
-  fs.readFile(path.join(__dirname, '../archives/sites.txt'), "utf-8", function(err, data){
+  fs.readFile(exports.paths.list, "utf8", function(err, data){
     if(err){
       throw err;
     }
 
-  var dataArray = data.split('\n');
+    var dataArray = data.split('\n');
 
-  _.each(dataArray, function(dataURL) {
-    if (url === dataURL) {
-      out = true;
-    }
+    _.each(dataArray, function(dataURL) {
+      if (url === dataURL) {
+        out = true;
+      }
+    });
+    callback(out);
   });
-  callback(out);
-});
 
 };
 
 exports.addUrlToList = function(url, callback) {
-  fs.readFile(path.join(__dirname, '../archives/sites.txt'), "utf-8", function(err, data){
+  fs.readFile(exports.paths.list, "utf8", function(err, data){
     if(err){
       throw err;
     }
 
-  var dataArray = data.split('\n');
+    var dataArray = data.toString().split('\n');
 
-  dataArray[dataArray.length] = url;
+    dataArray[dataArray.length-1] = url;
 
-  fs.writeFile(path.join(__dirname, '../archives/sites.txt'), "utf-8", dataArray.join("\n"));
+    fs.writeFile(exports.paths.list, dataArray.join("\n"));
+
   });
-  callback(dataArray);
+  callback();
 };
 
 exports.isUrlArchived = function(url, callback) {
-  //callback takes exists boolean
+  var out = false;
+console.log(exports.paths.archivedSites)
+  fs.readdir(exports.paths.archivedSites, function(err, data){
+    if(err){
+      throw err;    
+    }
+    console.log("DATA!", data)
+
+    _.each(data, function(dataURL) {
+      if (url === dataURL) {
+        out = true;
+      }
+    });
+    callback(out);
+  });
 };
 
 exports.downloadUrls = function() {
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
