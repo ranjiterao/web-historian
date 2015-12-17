@@ -35,7 +35,14 @@ exports.readListOfUrls = function(callback) {
   });
 };
 
-exports.isUrlInList = function() {
+exports.isUrlInList = function(url) {
+  var out = false//we think it should return a boolean, maybe not, but it makes sense
+  var urlArray = exports.readListOfUrls();//we were hoping this would return an array of the sites
+  console.log("BUTTS", urlArray)//checking to see if it did return array. it doesn't
+  if(indexOf(urlArray, url) > -1){//had it returned an array, this would have been where we checked if the url was in there
+    out = true
+  }
+  return out;
 };
 
 exports.addUrlToList = function() {
