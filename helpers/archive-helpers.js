@@ -75,13 +75,11 @@ exports.addUrlToList = function(url, callback) {
 
 exports.isUrlArchived = function(url, callback) {
   var out = false;
-console.log(exports.paths.archivedSites)
+
   fs.readdir(exports.paths.archivedSites, function(err, data){
     if(err){
       throw err;    
     }
-    console.log("DATA!", data)
-
     _.each(data, function(dataURL) {
       if (url === dataURL) {
         out = true;
@@ -91,7 +89,10 @@ console.log(exports.paths.archivedSites)
   });
 };
 
-exports.downloadUrls = function() {
+exports.downloadUrls = function(dataArray) {
+
+  // fs.createWriteStream(exports.paths.archivedSites, function()
+
 };
 
 
