@@ -6,7 +6,7 @@ var fs = require('fs');
 // require more modules/folders here!
 
 exports.handleRequest = function (req, res) {
-console.log(archive.isUrlArchived(req.url, function(bool){return bool;}));
+
 var body = '';
 
 var statusCode = 200;
@@ -25,14 +25,15 @@ if(req.method === 'GET'){
       });
   } else {
     console.log("INSIDE");
-    archive.isUrlArchived(req.url, function(bool){
-      console.log("BOOL:", bool)
-      if(bool){
+    console.log(archive.paths.archivedSites.concat(req.url));
+    archive.isUrlArchived(req.url, function(exists){
+      console.log("exists:", exists);
+      if(exists){
         fs.readFile(archive.paths.archivedSites.concat(req.url), function(err, data){
           if(err){
             throw err;
           }
-          console.log("DATA DATA DATA", data)
+          console.log("DATA DATA DATA", data);
           body += data;
           res.writeHead(statusCode);
           res.end((body).toString());

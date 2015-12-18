@@ -74,18 +74,20 @@ exports.addUrlToList = function(url, callback) {
 };
 
 exports.isUrlArchived = function(url, callback) {
-  var out = false;
-
-  fs.readdir(exports.paths.archivedSites, function(err, data){
+  var isArchived = false;
+  if(url.charAt(0)=== '/'){
+    url = url.slice(1);
+  }
+  fs.readdir(exports.paths.archivedSites, function(err, urlArray){
     if(err){
       throw err;    
     }
-    _.each(data, function(dataURL) {
+    _.each(urlArray, function(dataURL) {
       if (url === dataURL) {
-        out = true;
+        isArchived = true;
       }
     });
-    callback(out);
+    callback(isArchived);
   });
 };
 
